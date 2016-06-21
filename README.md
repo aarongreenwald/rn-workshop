@@ -49,7 +49,7 @@ away with (or without) on the web you can't on mobile.
 
 ## Step 0 - Our Web App
 
-## Step 0.1 - Setup
+### Step 0.1 - Setup
 
 ```
 cd server
@@ -60,6 +60,14 @@ cd boilerplate/vanity-website
 npm install
 npm run start
 ```
+
+### Step 0.2 - Finish Web App
+
+- Increment the visitor count when the home page is loaded
+- Display the visitor count on the home page
+- Update the marquee when user types in input
+- Render the list of images
+- Clicking on an image should take you to a page with just that image on it (`Monkey.js`)
 
 ## Step 1 - Create an App
 

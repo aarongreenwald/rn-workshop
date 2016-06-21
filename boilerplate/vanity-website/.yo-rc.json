@@ -1,0 +1,8 @@
+{
+  "generator-react-webpack": {
+    "appName": "vanityWebsite",
+    "style": "scss",
+    "postcss": true,
+    "generatedWithVersion": 3
+  }
+}
