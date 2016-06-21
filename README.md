@@ -49,6 +49,17 @@ away with (or without) on the web you can't on mobile.
 
 ## Step 0 - Our Web App
 
+## Step 0.1 - Setup
+
+```
+cd server
+npm install
+node server.j
+#new terminal
+cd boilerplate/vanity-website
+npm install
+npm run start
+```
 
 ## Step 1 - Create an App
 
@@ -91,10 +102,22 @@ and center all the text both vertically and horizontally. For most people, this 
 No 1990s site or app is complete without an annoying scrolling marquee. Fortunately for us, we don't have to implement the marquee 
 ourselves. Somebody else did it for us. Now it's time to learn how to add third party native components to our app.
 
+The component we want to use is [here](https://github.com/aarongreenwald/react-native-marquee-label). Install it
+using `npm install --save git+ssh://git@github.com/aarongreenwald/react-native-marquee-label.git` and then link 
+the binaries.
+
 ##Step 5 - Reusing Business Logic
 
 This step is fun, because it's copy/paste. Go ahead and implement the visitor count feature from the web. The good news is
 that all the business logic should work out of the box, you just have to write the component. And even that is 80% reusable.
+
+To make it all work, you'll need to do some npm installations. You need:
+
+- react
+- redux
+- react-redux
+- redux-logger
+- redux-promise-middleware
 
 ##Step 7 - Navigation
 
@@ -104,6 +127,9 @@ from scene to scene, so we'll use the out of the box `Navigator` component and b
 - HideousHomePage
 - MonkeyList
 - Monkey
+
+There will be a way to navigate from `HideousHomePage` to `MonkeyList`, where a list of images will be displayed,
+and a way to navigate from `MonkeyList` to `Monkey` while passing a specific image in props.
 
 ##Step 8 - ListView
 
@@ -125,3 +151,6 @@ change the font of our app? (And not just the font family - we'd like to color a
 isn't as easy as it might appear... `<evil-laugh />`
 
 ##Bonus: Android
+
+What happens when you try to run this on android? How much work will need to be done to make it work? How much
+of the code is reusable?
