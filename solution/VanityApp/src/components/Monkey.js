@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image, PanResponder, Animated} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image, PanResponder, Animated} from 'react-native';
 import BackButton from './BackButton';
 
 export default class Monkey extends Component {

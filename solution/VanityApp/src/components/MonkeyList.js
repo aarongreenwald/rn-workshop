@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image, ListView} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image, ListView} from 'react-native';
 import BackButton from './BackButton';
 
 

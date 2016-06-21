@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, TextInput, Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, TextInput, Image} from 'react-native';
+import CustomText from './CustomText';
 import MarqueeLabel from '@remobile/react-native-marquee-label';
 import * as actions from '../store/actions';
 
@@ -26,11 +27,11 @@ export default class HideousHomePage extends Component {
     return (
       <View style={styles.container}>
         <Image source={require('../../images/orange.jpg')} style={styles.backgroundImage}>
-            <Text style={styles.text}>
+            <CustomText style={styles.text}>
               Hello There. My name is Aaron Greenwald.
-            </Text>
-            <Text style={styles.text}>You are visitor #{visitorCount}</Text>
-            <TouchableOpacity onPress={navigateToMonkeyList}><Text style={styles.text}>Check out some cool pictures!!</Text></TouchableOpacity>
+            </CustomText>
+            <CustomText style={styles.text}>You are visitor #{visitorCount}</CustomText>
+            <TouchableOpacity onPress={navigateToMonkeyList}><CustomText style={styles.text}>Check out some cool pictures!!</CustomText></TouchableOpacity>
             <View style={styles.setMarquee}>
               <TextInput
                 onChangeText={this.changeMarqueeText.bind(this)}
@@ -82,8 +83,7 @@ const styles = StyleSheet.create({
   },
   text: {
     padding: 5,
-    backgroundColor: '#fff',
-    fontFamily: 'Bradley Hand'
+    backgroundColor: '#fff'
   },
   marqueeLabel: {
     backgroundColor: '#FFFFE0',
