@@ -1,59 +1,80 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ * @flow
+ */
+
 import React, { Component } from 'react';
-import {AppRegistry, Navigator} from 'react-native';
-import {connect} from 'react-redux';
-import {Provider} from 'react-redux';
-import HideousHomePage from './src/components/HideousHomePage';
-import MonkeyList from './src/components/MonkeyList';
-import Monkey from './src/components/Monkey';
-import {store, mapStateToProps} from './src/store';
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Navigator,
+    TouchableHighlight
+} from 'react-native';
+import {Main} from './src/components/Main'
+import {HideousHomePage} from './src/components/HideousHomePage'
+import {MonkeyList} from './src/components/MonkeyList'
+import {Monkey} from './src/components/Monkey'
 
+class VanityApp extends Component {
 
-const renderScene = (route, navigator, props) => {
-  props = {
-    ...props,
-    back: () => {
-      if (route.index > 0) {
-        navigator.pop();
-      }
+  render() {
+    return (
+    <Navigator
+        initialRoute={{index: 0}}
+        renderScene={(route, navigator) => {
+          switch (route.index) {
+            case 0:
+              return <Main onButtonPress={() => {
+                 navigator.push({index: 1})
+              }}/>;
+          case 1:
+            return <HideousHomePage onButtonPress={() => {
+                 navigator.push({index: 2})
+              }} onBack={()=>{navigator.pop();}} />
+;         case 2:
+            return <MonkeyList onMonkeyPressed={(monkeyImage) => {
+              navigator.push({index: 3, monkey: monkeyImage})
+              }
+            } onBack={()=>{navigator.pop();}} />;
+          case 3:
+            return <Monkey monkey={route.monkey} onBack={()=>{navigator.pop();}} />;
+          }
+        }
     }
-  };
-  switch (route.name) {
-    case 'monkey-list':
-      return <MonkeyList
-        {...props}
-        navigateToMonkey={monkey => {
-          navigator.push({
-            name: 'monkey',
-            index: route.index + 1,
-            passProps: {monkey}
-          });
-        }}
-      />;
-    case 'monkey':
-      return <Monkey {...props} {...route.passProps} />;
-    default:
-      return <HideousHomePage
-        {...props}
-        navigateToMonkeyList={() => {
-          navigator.push({
-            name: 'monkey-list',
-            index: route.index + 1,
-          });
-        }}
-      />
+    />
+    );
   }
-};
+}
 
-const App = props =>  <Navigator
-  initialRoute={{name: 'home', index: 0}}
-  renderScene={(route, navigator) => renderScene(route, navigator, props)}
-/>;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  bg: {
+    flex: 1,
+    // resizeMode: 'cover',
+    width: null,
+    height: null,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 30,
+    backgroundColor: 'transparent'
+  },
+  marqueeLabel: {
+    backgroundColor: '#FFFFE0',
+    alignSelf: "stretch",
+    height:30
+  }
 
-const ConnectedApp = connect(mapStateToProps)(App);
-
-const VanityApp = () =>
-  <Provider store={store}>
-    <ConnectedApp />
-  </Provider>;
+});
 
 AppRegistry.registerComponent('VanityApp', () => VanityApp);
