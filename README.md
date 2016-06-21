@@ -141,7 +141,9 @@ The component we want to use is [here](https://github.com/aarongreenwald/react-n
 using `npm install --save git+ssh://git@github.com/aarongreenwald/react-native-marquee-label.git` and then link 
 the binaries.
 
-(You can either follow the instructions in the component's README, which details the traditional way of linking, 
+Note that you might need to `import MarqueeLabel from '@remobile/react-native-marquee-label';`, and not just `react-native-marquee-label` like the instructions suggest.
+
+(You can either follow the instructions in the component's README, which details the traditional way of linking,
 or you can try a cool shiny tool called `rnpm`. If you use `rnpm`, you're a bit shielded from the nitty-gritty of
 how binaries work in React Native.
 
