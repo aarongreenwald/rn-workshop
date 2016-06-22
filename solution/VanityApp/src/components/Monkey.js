@@ -1,83 +1,72 @@
-import React, {Component} from 'react';
-import {View, StyleSheet, TouchableOpacity, Image, PanResponder, Animated} from 'react-native';
-import BackButton from './BackButton';
+/**
+ * Created by MLmediapps on 21/06/2016.
+ */
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ * @flow
+ */
 
-export default class Monkey extends Component {
+import React, { Component } from 'react';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    Navigator,
+    TouchableHighlight,
+    PanResponder,
+    Animated
+} from 'react-native';
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      previousMonkeyPosition: {
-        left: 0,
-        top: 0
-      }
-    };
-    this.panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => this.setState({
-        monkeyPosition: {
-          ...this.state.monkeyPosition,
-          opacity: .5
-        }
-      }),
-      onPanResponderMove: (e, gestureState) => this.setState({
-        monkeyPosition: {
-          ...this.state.monkeyPosition,
-          left: this.state.previousMonkeyPosition.left + gestureState.dx,
-          top: this.state.previousMonkeyPosition.top + gestureState.dy
-        }
-      }),
-      onPanResponderRelease: this.stopPanResponder.bind(this),
-      onPanResponderTerminate: this.stopPanResponder.bind(this),
-    });
-  }
+export class Monkey extends Component {
 
-  componentDidMount() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            pan: new Animated.ValueXY(),//Step 1
+            isDragging: false
+        };
+        this.panResponder = PanResponder.create({    //Step 2
+            onPanResponderGrant: (evt, gestureState) => {
+                this.setState({isDragging: true})
+            },
+            onStartShouldSetPanResponder: () => true,
+            onPanResponderMove: Animated.event([null, { //Step 3
+                dx: this.state.pan.x,
+                dy: this.state.pan.y
+            }]),
+            onPanResponderRelease: (e, gesture) => {
+                Animated.spring(            //Step 1
+                    this.state.pan,         //Step 2
+                    {toValue: {x: 0, y: 0}}     //Step 3
+                ).start();
+                this.setState({isDragging: false})
+            } //Step 4
+        });
+    }
 
-    this.setState({
-      monkeyPosition: {}
-    });
-  }
-
-  stopPanResponder(e, gestureState) {
-    this.setState({
-      previousMonkeyPosition: {
-        left: this.state.previousMonkeyPosition.left + gestureState.dx,
-        top: this.state.previousMonkeyPosition.top + gestureState.dy
-      },
-      monkeyPosition: {
-        ...this.state.monkeyPosition,
-        opacity: 1
-      }
-    });
-  }
-
-
-  render() {
-    let {monkey, back} = this.props;
-    return (
-      <View style={styles.container}>
-        <BackButton back={back} />
-        <Animated.Image source={monkey}
-               style={[styles.monkey, this.state.monkeyPosition]}
-               {...this.panResponder.panHandlers}/>
-      </View>
-    )
-  }
-
+    render() {
+        return (
+            <View style={styles.container}>
+                <Animated.View {...this.panResponder.panHandlers} style={this.state.pan.getLayout()}>
+                    <Image source={this.props.monkey}/>
+                </Animated.View>
+                <TouchableHighlight onPress={this.props.onBack}>
+                    <Text>Back!</Text>
+                </TouchableHighlight>
+                <Text>{this.state.isDragging ? "DRAGGING!" : "NOT DRAGGIN"}</Text>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    flex: 1
-  },
-  monkey: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    width: 120,
-    height: 120
-  }
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+
 });
+
